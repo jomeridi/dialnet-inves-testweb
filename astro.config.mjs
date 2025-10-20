@@ -3,9 +3,8 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  // Reemplaza con el dominio de producción de tu sitio web.
-  site: "https://example.com",
-  base: "/dialnet-inves-testweb/",
+  site: "https://jomeridi.github.io",
+  base: "/inv-es-astro-web/",
   i18n: {
     defaultLocale: "es",
     locales: ["es", "en"],
