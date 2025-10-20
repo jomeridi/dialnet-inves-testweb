@@ -1,3 +1,4 @@
 ---
-return Astro.redirect('/es/');
+const esHomepage = `${import.meta.env.BASE_URL}es/`;
+return Astro.redirect(esHomepage);
 ---
