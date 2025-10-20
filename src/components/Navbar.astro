@@ -3,15 +3,15 @@ import nav from '../data/nav.json';
 const lang = Astro.currentLocale;
 const navItems = nav[lang] || [];
 const { pathname } = Astro.url;
+const baseUrl = import.meta.env.BASE_URL;
 ---
 <ul>
   {navItems.map(item => {
-    // item.url is like "/es/" or "/es/autores/"
-    // Astro automatically handles prepending the base path in hrefs
-    const isActive = pathname.endsWith(item.url);
+    const itemPath = `${baseUrl}${item.url.startsWith('/') ? item.url.substring(1) : item.url}`;
+    const isActive = pathname === itemPath || `${pathname}/` === itemPath;
     return (
       <li>
-        <a href={item.url} aria-current={isActive ? 'page' : false}>
+        <a href={itemPath} aria-current={isActive ? 'page' : false}>
           {item.title}
         </a>
       </li>
