@@ -1,0 +1,47 @@
+---
+import Head from '../components/Head.astro';
+import Navbar from '../components/Navbar.astro';
+import NavFooter from '../components/NavFooter.astro';
+import site from '../data/site.json';
+
+const { title, description } = Astro.props.frontmatter;
+const lang = Astro.currentLocale;
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <Head title={title} description={description} />
+  </head>   
+  <body>
+    <header class="container-fluid site-header">
+      <a class="brand" href={import.meta.env.BASE_URL + lang + '/'}>{site.title}</a>
+      <section class="container">
+        <nav class="navbar">        
+          <Navbar />
+        </nav>
+      </section>
+    </header>
+    
+    <main class="container">
+      <article>
+        <h1>{title}</h1>
+        <slot />
+      </article>
+    </main>
+
+    <footer class="container-fluid">
+      <section class="container">
+        <nav>
+          <NavFooter />
+        </nav>
+        <p>&copy; {site.title} {year}</p>
+      </section>
+    </footer>
+  </body>
+</html>
+<style is:global>
+  .site-header {
+    position: relative;
+  }
+</style>

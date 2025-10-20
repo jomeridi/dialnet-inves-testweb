@@ -1,0 +1,16 @@
+---
+import site from '../data/site.json';
+const currentLang = Astro.currentLocale;
+const { pathname } = Astro.url;
+---
+<div class="lang-switcher" aria-label="Idioma / Language">
+  {site.langs.map(lang => {
+    const newPath = pathname.replace(`/${currentLang}/`, `/${lang}/`);
+    return <a href={newPath} hreflang={lang} lang={lang}>{lang.toUpperCase()}</a>;
+  })}
+</div>
+
+<style>
+  .lang-switcher { position: absolute; right: 1rem; top: .8rem; font-size: .9rem; }
+  .lang-switcher a { text-decoration: none; margin-left: .5rem; }
+</style>

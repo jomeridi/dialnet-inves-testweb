@@ -1,0 +1,39 @@
+---
+import site from '../data/site.json';
+import LangSwitcher from './LangSwitcher.astro';
+
+const { title, description } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const alternateURLs = {};
+const currentLang = Astro.currentLocale;
+
+site.langs.forEach(lang => {
+  if (lang !== currentLang) {
+    const path = Astro.url.pathname.replace(`/${currentLang}/`, `/${lang}/`);
+    alternateURLs[lang] = new URL(path, Astro.site);
+  }
+});
+---
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+<title>{title} · {site.title}</title>
+<meta name="description" content={description || site.description}>
+
+<link rel="icon" href={import.meta.env.BASE_URL + "favicon.ico"} sizes="any">
+<link rel="icon" href={import.meta.env.BASE_URL + "favicon.svg"} type="image/svg+xml">
+<link rel="apple-touch-icon" href={import.meta.env.BASE_URL + "apple-touch-icon.png"}>
+
+<link rel="stylesheet" href={import.meta.env.BASE_URL + "styles.css"}>
+
+<link rel="canonical" href={canonicalURL}>
+
+{Object.entries(alternateURLs).map(([lang, url]) => (
+  <link rel="alternate" hreflang={lang} href={url} />
+))}
+
+<meta http-equiv="content-language" content={currentLang}> 
+
+<LangSwitcher />
